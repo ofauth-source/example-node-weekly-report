@@ -1,0 +1,13 @@
+{
+  "name": "example-node-weekly-report",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Create a weekly OFAuth earnings and transaction report.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --env-file=.env weekly-report.js"
+  }
+}
