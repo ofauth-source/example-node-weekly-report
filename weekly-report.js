@@ -20,8 +20,8 @@ if (!process.env.ACCESS_TOKEN || !process.env.LINKED_ACCOUNT_ID) {
 async function read(path, query) {
 	const url = new URL(`https://api.ofauth.com/v3/access/${path}`);
 	url.search = new URLSearchParams(query).toString();
-	const response = await fetch(url, { headers });
-	if (!response.ok) throw new Error(`${response.status}: ${await response.text()}`);
+	const response = await fetch(url, { headers, redirect: "error", signal: AbortSignal.timeout(15_000) });
+	if (!response.ok) throw new Error(`Finance read failed: ${response.status}`);
 	return response.json();
 }
 
