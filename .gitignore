@@ -1,8 +1,7 @@
 node_modules/
-.env
-.env.*
 !.env.example
 npm-debug.log*
 weekly-report.json
 weekly-transactions.json
 results/
+config.bat

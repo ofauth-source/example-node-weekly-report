@@ -8,6 +8,6 @@
     "node": ">=22"
   },
   "scripts": {
-    "start": "node --env-file=.env weekly-report.js"
+    "start": "node init && node --env-file=.env weekly-report.js"
   }
 }
