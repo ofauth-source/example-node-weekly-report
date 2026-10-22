@@ -49,3 +49,11 @@ The transaction endpoint has no `endDate` parameter. The program follows every p
 Each run replaces `weekly-transactions.json`; shell redirection also replaces `weekly-report.json`. Use a separate working directory for each report you want to keep. Both output files contain financial data and are ignored by Git. Store them with appropriate access controls and retention rules.
 
 Keep the token on your backend. If access expires or the account needs recovery, resolve that condition and rerun the report. This example does not refresh tokens or retry failed requests. It is a reporting example, not an accounting ledger or a payout reconciliation system.
+
+## OAuth ownership and recovery
+
+Use the [Express OAuth example](https://github.com/ofauth-source/example-express-oauth) for client registration, a session-bound callback with S256 PKCE, ordinary token persistence, paginated account discovery, explicit account selection, provider reconnect, and RFC 7009 revocation. Sandbox, Test, and Live use the same standard confidential OAuth flow.
+
+Your auth framework or application owns the tokens. Access tokens are opaque and initially last 15 minutes; use the returned `expires_in`. Refresh tokens remain stable and expire after 90 days without authenticated refresh. Separate instances can refresh concurrently, and a lost refresh response can be retried with the same token. No mandatory database refresh lock or attempt journal is needed. Protect registration changes with conditional writes.
+
+A provider session error requires reconnect for that exact linked account. OAuth refresh cannot repair it. Revoking a refresh token ends that credential and its access tokens; ending the authorization ends every credential. Never automatically repeat an interrupted provider write. Developer requests use the application's Developer entitlement; the account owner's Operator plan is independent.
